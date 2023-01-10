@@ -1,4 +1,4 @@
-import {View, Text, Touchable, TouchableOpacity} from 'react-native';
+import {View, Text} from 'react-native';
 import React from 'react';
 
 import {styles} from './styles';
@@ -7,15 +7,23 @@ import {NavigationService} from '../../navigation';
 import {NavigateTo, useForm} from '../../utils';
 import {ChatService} from '../../services';
 import {theme} from '../../assets';
+import {ACTION_TYPES, useAppContext} from '../../context';
 
 const LoginScreen = () => {
-  const {getValues, setValue, errors} = useForm({defaultValues: {name: '', password: ''}});
+  const {getValues, setValue, errors, isValid} = useForm({defaultValues: {name: '', password: ''}});
+  const {dispatch} = useAppContext();
 
   const onSubmit = async () => {
     const {name, password} = getValues();
+
     if (name !== '' && password !== '') {
-      const params = {full_name: name, login: name, password};
-      await ChatService.signIn(params);
+      dispatch({type: ACTION_TYPES.START_LOADING});
+      const params = {full_name: name, login: name, password}; // related to chat
+      const session = await ChatService.signIn(params); // related to chat
+      if (session) {
+        dispatch({type: ACTION_TYPES.SET_SESSION, payload: session});
+      }
+      dispatch({type: ACTION_TYPES.STOP_LOADING});
     }
   };
 
@@ -25,7 +33,7 @@ const LoginScreen = () => {
         <Text style={styles.label}>Sign Into ConnectyCube</Text>
       </View>
       <View style={styles.form}>
-        <AppInput title="Fullname" onChangeText={text => setValue('name', text)} placeholder="Enter fullname" returnKeyType="next" value={getValues('name')} error={errors.name} />
+        <AppInput title="Full Name" onChangeText={text => setValue('name', text)} placeholder="Enter fullname" returnKeyType="next" value={getValues('name')} error={errors.name} />
         <AppInput title="Password" onChangeText={text => setValue('password', text)} placeholder="Enter Password" secureText value={getValues('password')} error={errors.password} />
         <AppButton
           title="Don't have an account?"
@@ -36,7 +44,7 @@ const LoginScreen = () => {
         />
 
         <View style={styles.buttonWrapper}>
-          <AppButton title="Login" onPress={onSubmit} />
+          <AppButton title="Login" onPress={onSubmit} disabled={!isValid} />
         </View>
       </View>
     </View>

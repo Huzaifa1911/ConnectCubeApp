@@ -3,12 +3,17 @@ import {NavigationContainer, createNavigationContainerRef} from '@react-navigati
 
 import CommonStack from './CommonStack';
 import AuthStack from './AuthStack';
+import {useAppContext} from '../context';
+import {isEmptyOrNil} from '../utils';
 
 export const NavigationService = createNavigationContainerRef();
 
 const Navigation = () => {
-  const isLoggedIn = false;
-  return <NavigationContainer ref={NavigationService}>{isLoggedIn ? <AuthStack /> : <CommonStack />}</NavigationContainer>;
+  const {
+    state: {session},
+  } = useAppContext();
+  const isSessionCreated = !isEmptyOrNil(session);
+  return <NavigationContainer ref={NavigationService}>{isSessionCreated ? <AuthStack /> : <CommonStack />}</NavigationContainer>;
 };
 
 export default Navigation;

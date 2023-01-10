@@ -1,7 +1,11 @@
 import {View, Text} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
+import {ChatService} from '../../services';
 
 const HomeScreen = () => {
+  useEffect(() => {
+    ChatService.fetchDialogs();
+  }, []);
   return (
     <View>
       <Text>HomeScreen</Text>

@@ -4,7 +4,7 @@ import React, {useMemo} from 'react';
 import {theme} from '../assets';
 
 const AppButton = ({title, onPress, style, buttonColor = theme.colors.primary, titleColor = theme.colors.white, width = '100%', disabled}) => {
-  const buttonStyle = useMemo(() => StyleSheet.flatten([styles.container, {backgroundColor: buttonColor, width}, style]), [style, buttonColor, width]);
+  const buttonStyle = useMemo(() => StyleSheet.flatten([styles.container, {backgroundColor: disabled ? theme.colors.gray : buttonColor, width}, style]), [style, buttonColor, width, disabled]);
 
   return (
     <TouchableOpacity onPress={onPress} disabled={disabled} activeOpacity={0.6} style={buttonStyle}>

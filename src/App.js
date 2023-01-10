@@ -1,16 +1,20 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import Navigation from './navigation';
 import {StyleSheet} from 'react-native';
+
 import {ChatService} from './services';
+import {AppContextProvider} from './context';
+import AppWrapper from './AppWrapper';
 
 const App = () => {
   useEffect(() => ChatService.init(), []);
   return (
-    <SafeAreaView style={styles.container}>
-      <Navigation />
-    </SafeAreaView>
+    <AppContextProvider>
+      <SafeAreaView style={styles.container}>
+        <AppWrapper />
+      </SafeAreaView>
+    </AppContextProvider>
   );
 };
 

@@ -6,5 +6,3 @@ export const config = {
   authSecret: CHAT_AUTH_SECRET,
   debug: {mode: 1},
 };
-
-// ConnectyCube.init(config);

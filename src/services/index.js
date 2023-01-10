@@ -1,1 +1,2 @@
-export {default as ChatService} from './ChatService';
+export {ChatService} from './ChatService';
+export {default as StorageService} from './StorageService';
