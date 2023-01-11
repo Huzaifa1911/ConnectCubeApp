@@ -5,25 +5,20 @@ import {styles} from './styles';
 import {AppButton, AppInput} from '../../components';
 import {NavigationService} from '../../navigation';
 import {NavigateTo, useForm} from '../../utils';
-import {ChatService} from '../../services';
+import {useSignInToService} from '../../services';
 import {theme} from '../../assets';
-import {ACTION_TYPES, useAppContext} from '../../context';
 
 const LoginScreen = () => {
   const {getValues, setValue, errors, isValid} = useForm({defaultValues: {name: '', password: ''}});
-  const {dispatch} = useAppContext();
+
+  const {mutate: signInMutation} = useSignInToService({showLoading: true});
 
   const onSubmit = async () => {
     const {name, password} = getValues();
 
     if (name !== '' && password !== '') {
-      dispatch({type: ACTION_TYPES.START_LOADING});
-      const params = {full_name: name, login: name, password}; // related to chat
-      const session = await ChatService.signIn(params); // related to chat
-      if (session) {
-        dispatch({type: ACTION_TYPES.SET_SESSION, payload: session});
-      }
-      dispatch({type: ACTION_TYPES.STOP_LOADING});
+      const params = {full_name: name, login: name, password};
+      signInMutation(params);
     }
   };
 

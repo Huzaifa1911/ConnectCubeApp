@@ -1,39 +1,63 @@
 import ConnectyCube from 'react-native-connectycube';
 
 import {config} from './config';
-import {showAlert} from '../../utils';
-import StorageService from '../StorageService';
 import {connect} from './Chat';
+import {setData, getData, removeData} from '../StorageService';
 
-const USER_SESSION = '@USER_SESSION';
+const CHAT_SESSION = '@CHAT_SESSION';
 
-export const init = () => {
-  ConnectyCube.init(config);
+export const initiateChatService = async () => {
+  try {
+    ConnectyCube.init(config);
+
+    return await tryAutoLogin();
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };
 
-export const signIn = async params => {
+export const signIntoChatService = async params => {
   // since this function returns promise, we can use it in react query as well.
   try {
     const session = await ConnectyCube.createSession(params);
     const currentUser = session.user;
     const customSession = Object.assign({}, currentUser, {password: params.password});
-
-    // await StorageService.setData(customSession, USER_SESSION);
     await connect(currentUser.id, params.password);
+    await setData(customSession, CHAT_SESSION);
     return customSession;
   } catch (error) {
-    showAlert(error.info);
+    return Promise.reject(error);
   }
 };
 
-export const signUp = async params => {
+export const signUpToChatService = async params => {
   try {
     await ConnectyCube.createSession();
     await ConnectyCube.users.signup(params);
-    return await signIn(params);
-  } catch (error) {}
+    return await signIntoChatService(params);
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };
 
-export const logout = async () => {
-  await ConnectyCube.logout();
+export const tryAutoLogin = async () => {
+  try {
+    const session = await getData(CHAT_SESSION);
+    if (session) {
+      return signIntoChatService(session);
+    } else {
+      return Promise.reject({info: 'No Session found'});
+    }
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+export const logoutFromChatService = async () => {
+  try {
+    await removeData(CHAT_SESSION);
+    return await ConnectyCube.logout();
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };

@@ -1,19 +1,22 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {QueryClientProvider} from 'react-query';
+import {LogBox, StyleSheet} from 'react-native';
 
-import {StyleSheet} from 'react-native';
-
-import {ChatService} from './services';
+import {queryClient} from './services';
 import {AppContextProvider} from './context';
 import AppWrapper from './AppWrapper';
 
 const App = () => {
-  useEffect(() => ChatService.init(), []);
+  LogBox.ignoreAllLogs();
+
   return (
     <AppContextProvider>
-      <SafeAreaView style={styles.container}>
-        <AppWrapper />
-      </SafeAreaView>
+      <QueryClientProvider client={queryClient}>
+        <SafeAreaView style={styles.container}>
+          <AppWrapper />
+        </SafeAreaView>
+      </QueryClientProvider>
     </AppContextProvider>
   );
 };
