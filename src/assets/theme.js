@@ -6,5 +6,7 @@ export const theme = {
     error: '#CD0404',
     gray: '#B2B2B2',
     backdrop: 'rgba(27, 49, 73, 0.5)',
+    blue: '#5BC0F8',
+    lightGreen: '#439A97',
   },
 };

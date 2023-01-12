@@ -7,6 +7,14 @@ export const NavigateTo = {
   ADD_CONTACT_SCREEN: 'ADD_CONTACT_SCREEN',
 };
 
+export const DIALOG_TYPE = {
+  PRIVATE: 3,
+  GROUP: 2,
+  BROADCAST: 1,
+  PUBLIC_CHANNEL: 4,
+};
+
 export const CHAT_APPLICATION_ID = 6860;
 export const CHAT_AUTH_KEY = 'r8GNG7EcRLHcES5';
 export const CHAT_AUTH_SECRET = 'VaYRzHtEvEkQL6L';
+export const USER_DEFAULT_IMAGE = 'https://www.shareicon.net/data/128x128/2016/05/24/770137_man_512x512.png';

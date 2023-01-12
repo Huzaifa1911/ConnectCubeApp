@@ -5,11 +5,9 @@ export const config = {
   authKey: CHAT_AUTH_KEY,
   authSecret: CHAT_AUTH_SECRET,
   debug: {mode: 1},
-};
-
-export const DIALOG_TYPE = {
-  PRIVATE: 3,
-  GROUP: 2,
-  BROADCAST: 1,
-  PUBLIC_CHANNEL: 4,
+  chat: {
+    streamManagement: {
+      enable: true,
+    },
+  },
 };

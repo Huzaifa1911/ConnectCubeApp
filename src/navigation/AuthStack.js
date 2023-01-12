@@ -29,7 +29,7 @@ const AuthStack = () => {
   return (
     <Stack.Navigator screenOptions={{headerBackTitle: ''}}>
       <Stack.Screen name={NavigateTo.HOME_SCREEN} component={HomeScreen} options={HomeScreenOptions} />
-      <Stack.Screen name={NavigateTo.ADD_CONTACT_SCREEN} component={AddContactScreen} />
+      <Stack.Screen name={NavigateTo.ADD_CONTACT_SCREEN} component={AddContactScreen} options={{title: 'Add Contacts'}} />
       <Stack.Screen name={NavigateTo.CHAT_SCREEN} component={ChatScreen} />
     </Stack.Navigator>
   );

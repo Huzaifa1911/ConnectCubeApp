@@ -3,15 +3,26 @@ import React, {useMemo} from 'react';
 
 import {theme} from '../assets';
 
-const AppInput = ({title, onChangeText, placeholder, secureText, value, returnKeyType = 'done', error}) => {
-  const inputStyle = useMemo(() => StyleSheet.flatten([styles.input, {borderColor: error ? theme.colors.error : theme.colors.heading}]), [error]);
+const AppInput = ({title, onChangeText, placeholder, secureText, value, returnKeyType = 'done', error, style, width, multiline, onSubmitEditing}) => {
+  const inputStyle = useMemo(() => StyleSheet.flatten([styles.input, {borderColor: error ? theme.colors.error : theme.colors.heading, width}, style]), [error, width, style]);
 
   return (
-    <View>
-      <View style={styles.titleWrapper}>
-        <Text style={styles.titleStyle}>{title}</Text>
-      </View>
-      <TextInput onChangeText={onChangeText} style={inputStyle} placeholder={placeholder} secureTextEntry={secureText} value={value} returnKeyType={returnKeyType} />
+    <View style={{width}}>
+      {title && (
+        <View style={styles.titleWrapper}>
+          <Text style={styles.titleStyle}>{title}</Text>
+        </View>
+      )}
+      <TextInput
+        onChangeText={onChangeText}
+        style={inputStyle}
+        placeholder={placeholder}
+        secureTextEntry={secureText}
+        value={value}
+        returnKeyType={returnKeyType}
+        multiline={multiline}
+        onSubmitEditing={onSubmitEditing}
+      />
     </View>
   );
 };
@@ -29,8 +40,9 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingHorizontal: 12,
-    paddingVertical: 12,
+    height: 45,
     borderWidth: 0.5,
     borderRadius: 8,
+    textAlignVertical: 'top',
   },
 });

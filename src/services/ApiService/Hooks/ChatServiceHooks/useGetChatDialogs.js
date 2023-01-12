@@ -1,8 +1,14 @@
+import {propOr} from 'ramda';
 import {getChatDialogs} from '../../../ChatService/Chat';
 import {useAppQuery} from '../GenericHooks';
 
-const useGetChatDialogs = ({showLoading = false, currentUserId}) => {
-  return useAppQuery({queryKey: ['DIALOGS'], queryFn: () => getChatDialogs(currentUserId), showLoading});
+const select = data => {
+  const dialogs = propOr([], 'items', data);
+  return dialogs;
+};
+
+const useGetChatDialogs = ({showLoading = false}) => {
+  return useAppQuery({queryKey: ['DIALOGS'], queryFn: () => getChatDialogs(), showLoading, select});
 };
 
 export default useGetChatDialogs;

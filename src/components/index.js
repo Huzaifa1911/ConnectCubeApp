@@ -4,3 +4,7 @@ export {default as AppLoader} from './AppLoader';
 export {default as ChatDialog} from './ChatDialog';
 export {default as FloatingActionButton} from './FloatingActionButton';
 export {default as EmptyListContainer} from './EmptyListContainer';
+export {default as UserCard} from './UserCard';
+export {default as SendMessageInput} from './SendMessageInput';
+export {default as Message} from './Message';
+export {default as MessageStatus} from './MessageStatus';

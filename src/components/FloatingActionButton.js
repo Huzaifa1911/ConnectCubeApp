@@ -2,10 +2,10 @@ import {StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import {theme} from '../assets';
 
-const FloatingActionButton = ({onPress, iconImage, color = theme.colors.primary}) => {
+const FloatingActionButton = ({onPress, icon, color = theme.colors.primary}) => {
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.6} style={[styles.container, {backgroundColor: color}]}>
-      <Image source={iconImage} resizeMode="contain" style={styles.icon} />
+      {icon}
     </TouchableOpacity>
   );
 };
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     bottom: 30,
     right: 25,
-    elevation: 10,
+    elevation: 5,
   },
   icon: {
     height: 25,
